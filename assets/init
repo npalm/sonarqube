@@ -16,10 +16,15 @@ sed -i 's|#sonar.jdbc.password=sonar|sonar.jdbc.password='"${DB_PASS}"'|g' /opt/
 sed -i 's|sonar.jdbc.url=jdbc:h2|#sonar.jdbc.url=jdbc:h2|g' /opt/sonar/conf/sonar.properties
 sed -i 's|#sonar.jdbc.url=jdbc:postgresql://localhost/sonar|sonar.jdbc.url=jdbc:postgresql://'"${DB_HOST}"'/'"${DB_NAME}"'|g' /opt/sonar/conf/sonar.properties
 
+if [ -n "${HTTP_PROXY_HOST}" ]; then
+  sed -i 's|#http.proxyHost=sonar.jdbc.url=|http.proxyHost='"${HTTP_PROXY_PORT}"'|g' /opt/sonar/conf/sonar.properties
+  sed -i 's|#http.proxyPort=sonar.jdbc.url=|http.proxyPort='"${HTTP_PROXY_HOST}"'|g' /opt/sonar/conf/sonar.properties  
+fi  
+
 appStart () {
   echo "Starting sonar..."
   set +e
-  #/opt/sonar/bin/linux-x86-64/sonar.sh console
+  /opt/sonar/bin/linux-x86-64/sonar.sh console
   #/opt/sonar/bin/linux-x86-64/sonar.sh start
   #tail -f /opt/sonar/logs/sonar.log
 }
