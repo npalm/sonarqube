@@ -7,6 +7,8 @@ DB_NAME=${DB_NAME:-sonar}
 DB_USER=${DB_USER:-sonar}
 DB_PASS=${DB_PASS:-xaexohquaetiesoo}
 
+cp -rf /sonar/conf /opt/sonar/
+
 # Configure wrapper.conf
 sed -i 's|#wrapper.java.additional.6=-server|wrapper.java.additional.6=-server|g' /opt/sonar/conf/wrapper.conf
 
