@@ -1,8 +1,5 @@
 #!/bin/bash
-
 set -e
-
-trap appStop SIGINT SIGTERM
 
 # Variables
 DB_HOST=$DB_PORT_5432_TCP_ADDR
@@ -19,8 +16,8 @@ sed -i 's|#sonar.jdbc.password=sonar|sonar.jdbc.password='"${DB_PASS}"'|g' /opt/
 sed -i 's|sonar.jdbc.url=jdbc:h2|#sonar.jdbc.url=jdbc:h2|g' /opt/sonar/conf/sonar.properties
 sed -i 's|#sonar.jdbc.url=jdbc:postgresql://localhost/sonar|sonar.jdbc.url=jdbc:postgresql://'"${DB_HOST}"'/'"${DB_NAME}"'|g' /opt/sonar/conf/sonar.properties
 
+# Configure http proxy
 if [ -n "${HTTP_PROXY_HOST}" ]; then
-  echo "Setting proxy"
   sed -i 's|#http.proxyHost=|http.proxyHost='"${HTTP_PROXY_HOST}"'|g' /opt/sonar/conf/sonar.properties
   sed -i 's|#http.proxyPort=|http.proxyPort='"${HTTP_PROXY_PORT}"'|g' /opt/sonar/conf/sonar.properties  
 fi  
@@ -35,7 +32,7 @@ appStart () {
 
 appStop () {
   echo "Stoping sonar..."
-  #set +e
+  set +e
   echo parameters $@
   exec /opt/sonar/bin/linux-x86-64/sonar.sh stop
 }
