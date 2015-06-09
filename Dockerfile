@@ -1,4 +1,4 @@
-FROM dockerfile/java:oracle-java8
+FROM npalm/java:oracle-java8
 MAINTAINER Niek Palm <dev.npalm@gmail.com>
 
 ENV SONAR_VERSION 5.1
