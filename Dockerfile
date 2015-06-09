@@ -1,7 +1,7 @@
-FROM dockerfile/java:oracle-java8
+FROM npalm/java:oracle-java8
 MAINTAINER Niek Palm <dev.npalm@gmail.com>
 
-ENV SONAR_VERSION 5.1
+ENV SONAR_VERSION 4.5.4
 
 RUN echo "deb http://downloads.sourceforge.net/project/sonar-pkg/deb binary/" >> /etc/apt/sources.list \
     && apt-get update && apt-get clean \ 
